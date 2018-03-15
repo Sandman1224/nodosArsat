@@ -12,9 +12,13 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    
+    //Tipos de Usuarios
+    const ADMINISTRADOR = 1;
+    const EJESA = 2;
+    const ARSAT = 3;
 
-
-    /**
+        /**
      * {@inheritdoc}
      */
     public function rules()
@@ -50,6 +54,8 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        // (*) Agrego el campo tipo como administrador provisionalmente
+        $user->type = self::ARSAT;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         
