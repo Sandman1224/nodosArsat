@@ -55,6 +55,8 @@ class NodosController extends Controller {
         $searchModel = new NodosSearch();
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
+        $nodosFormateados = $this->datosMarcador($dataProvider->query->all());
+
         $departamentos = Departamentos::find()
                 ->where(['borrado' => 0])
                 ->orderBy(['nombre' => SORT_ASC])
@@ -74,6 +76,7 @@ class NodosController extends Controller {
                     'departamentos' => $departamentos,
                     'municipios' => $municipios,
                     'localidades' => $localidades,
+                    'nodos' => $nodosFormateados
         ]);
     }
 
@@ -229,6 +232,39 @@ class NodosController extends Controller {
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    private function datosMarcador($nodos) {
+        $salida = [];
+        foreach ($nodos as $nodo) {
+            $arreglo['id'] = $nodo['id'];
+            $arreglo['nombre'] = $nodo['nombre'];
+            $arreglo['departamento'] = $nodo['departamento0']->nombre;
+            $arreglo['municipio'] = $nodo['municipio0']->nombre;
+            $arreglo['localidad'] = $nodo['localidad0']->nombre;
+            $arreglo['latitud'] = $nodo['latitud'];
+            $arreglo['longitud'] = $nodo['longitud'];
+            $arreglo['estadoSitio'] = $nodo['estadoSitio'];
+
+            switch ($nodo['prioridad']) {
+                case 1:
+                    $arreglo['prioridad'] = 'Alta';
+                    break;
+                case 2:
+                    $arreglo['prioridad'] = 'Media';
+                    break;
+                case 3:
+                    $arreglo['prioridad'] = 'Baja';
+                    break;
+                default:
+                    $data['prioridad'] = 'Sin Definir';
+                    break;
+            }
+
+
+            $salida[] = $arreglo;
+        }
+        return $salida;
     }
 
 }

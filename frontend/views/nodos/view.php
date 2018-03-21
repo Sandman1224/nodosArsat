@@ -2,9 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use frontend\assets\MapAsset;
+use yii\helpers\Json;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Nodos */
+
+MapAsset::register($this);
 
 $this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Nodos', 'url' => ['index']];
@@ -13,6 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="nodos-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <div id="map"></div>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrsDVmkIyyAcqnMdH4QYCpVEDX5SvXNrw&callback=verNodo">
+    </script>
+
+    <?php
+    $this->registerJs(
+            "var nodo = " . Json::htmlEncode($model) . ";", View::POS_HEAD
+    );
+    ?>
 
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -57,10 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             $data['documentacion'] = 'Definir Valor 1';
                             break;
                         case 2:
-                            $data['documentacion'] = 'Definir Valor 2';
+                            $data['documentacion'] = 'Obra';
                             break;
                         case 3:
-                            $data['documentacion'] = 'Definir Valor 3';
+                            $data['documentacion'] = 'Pendiente';
                             break;
                         default:
                             $data['documentacion'] = null;

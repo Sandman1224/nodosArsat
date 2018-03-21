@@ -89,8 +89,8 @@ use yii\helpers\ArrayHelper;
     <?=
     $form->field($model, 'estadoSitio')->dropDownList([
         1 => 'Definir Valor 1',
-        2 => 'Definir Valor 2',
-        3 => 'Definir Valor 3',
+        2 => 'Obra',
+        3 => 'Pendiente',
             ], ['prompt' => 'Seleccione estado del nodo']);
     ?>
 
