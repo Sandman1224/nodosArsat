@@ -9,6 +9,7 @@ use yii\helpers\Json;
 use yii\web\View;
 
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\NodosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 //Registramos el asset que contiene las referencias a los archivos script del 
@@ -36,10 +37,7 @@ $this->registerJs(
 <div class="nodos-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Crear Nodo', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?=
     GridView::widget([
@@ -153,7 +151,8 @@ $this->registerJs(
             //'borrado',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => 'Acción'
+                'header' => 'Acción',
+                'template' => '{view}{update}'
             ],
         ],
         'emptyText' => '¡No se encontraron nodos!',

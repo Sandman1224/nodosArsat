@@ -30,21 +30,27 @@ use Yii;
  * @property Localidades $localidad0
  * @property Municipios $municipio0
  */
-class Nodos extends \yii\db\ActiveRecord
-{
+class Nodos extends \yii\db\ActiveRecord {
+
+    const SCENARIO_ARSAT = 'arsat';
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'nodos';
+    }
+
+    public function scenarios() {
+        return[
+            self::SCENARIO_ARSAT => ['estadoSitioArsat']
+        ];
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['nombre', 'departamento', 'municipio', 'localidad', 'latitud', 'longitud', 'borrado'], 'required'],
             [['departamento', 'municipio', 'localidad', 'documentacion', 'poblacion', 'estadoSitio', 'prioridad'], 'integer'],
@@ -55,14 +61,14 @@ class Nodos extends \yii\db\ActiveRecord
             [['departamento'], 'exist', 'skipOnError' => true, 'targetClass' => Departamentos::className(), 'targetAttribute' => ['departamento' => 'id']],
             [['localidad'], 'exist', 'skipOnError' => true, 'targetClass' => Localidades::className(), 'targetAttribute' => ['localidad' => 'id']],
             [['municipio'], 'exist', 'skipOnError' => true, 'targetClass' => Municipios::className(), 'targetAttribute' => ['municipio' => 'id']],
+            [['estadoSitioArsat'], 'required', 'on' => self::SCENARIO_ARSAT]
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
@@ -88,24 +94,22 @@ class Nodos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDepartamento0()
-    {
+    public function getDepartamento0() {
         return $this->hasOne(Departamentos::className(), ['id' => 'departamento']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLocalidad0()
-    {
+    public function getLocalidad0() {
         return $this->hasOne(Localidades::className(), ['id' => 'localidad']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMunicipio0()
-    {
+    public function getMunicipio0() {
         return $this->hasOne(Municipios::className(), ['id' => 'municipio']);
     }
+
 }

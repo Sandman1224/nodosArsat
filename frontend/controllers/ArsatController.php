@@ -18,9 +18,9 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 /**
- * NodosController implements the CRUD actions for Nodos model.
+ * ArsatController implements the CRUD actions for Nodos model.
  */
-class NodosController extends Controller {
+class ArsatController extends Controller {
 
     /**
      * @inheritdoc
@@ -29,11 +29,12 @@ class NodosController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'create', 'view', 'update', 'delete', 'municipios', 'localidades'],
+                'only' => ['index'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'actions' => ['index'],
+                        'roles' => ['arsat'],
                     ],
                 ],
             ],
@@ -52,7 +53,7 @@ class NodosController extends Controller {
      */
     public function actionIndex() {
         $searchModel = new NodosSearch();
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $nodosFormateados = $this->datosMarcador($dataProvider->query->all());
 
@@ -98,20 +99,6 @@ class NodosController extends Controller {
      */
     public function actionCreate() {
         $model = new Nodos();
-        $model->borrado = "0";
-
-        $departamentos = ArrayHelper::map(Departamentos::find()
-                                ->where(['borrado' => 0])
-                                ->orderBy(['nombre' => SORT_ASC])
-                                ->all(), 'id', 'nombre');
-        $municipios = ArrayHelper::map(Municipios::find()
-                                ->where(['borrado' => 0])
-                                ->orderBy(['nombre' => SORT_ASC])
-                                ->all(), 'id', 'nombre');
-        $localidades = ArrayHelper::map(Localidades::find()
-                                ->andWhere(['borrado' => 0])
-                                ->orderBy(['nombre' => SORT_ASC])
-                                ->all(), 'id', 'nombre');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -119,9 +106,6 @@ class NodosController extends Controller {
 
         return $this->render('create', [
                     'model' => $model,
-                    'departamentos' => $departamentos,
-                    'municipios' => $municipios,
-                    'localidades' => $localidades,
         ]);
     }
 
@@ -134,20 +118,7 @@ class NodosController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $model->borrado = "0";
-
-        $departamentos = ArrayHelper::map(Departamentos::find()
-                                ->where(['borrado' => 0])
-                                ->orderBy(['nombre' => SORT_ASC])
-                                ->all(), 'id', 'nombre');
-        $municipios = ArrayHelper::map(Municipios::find()
-                                ->where(['borrado' => 0])
-                                ->orderBy(['nombre' => SORT_ASC])
-                                ->all(), 'id', 'nombre');
-        $localidades = ArrayHelper::map(Localidades::find()
-                                ->andWhere(['borrado' => 0])
-                                ->orderBy(['nombre' => SORT_ASC])
-                                ->all(), 'id', 'nombre');
+        $model->scenario = Nodos::SCENARIO_ARSAT;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -155,27 +126,7 @@ class NodosController extends Controller {
 
         return $this->render('update', [
                     'model' => $model,
-                    'departamentos' => $departamentos,
-                    'municipios' => $municipios,
-                    'localidades' => $localidades,
         ]);
-    }
-
-    /**
-     * Deletes an existing Nodos model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id) {
-        //$this->findModel($id)->delete();
-        //Borramos logicamente el nodo para conservar la información en la BD
-        $nodo = $this->findModel($id);
-        $nodo['borrado'] = "1";
-        $nodo->save();
-
-        return $this->redirect(['index']);
     }
 
     /**
@@ -191,46 +142,6 @@ class NodosController extends Controller {
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function actionMunicipios() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $departamento = $parents[0];
-                $out = Municipios::find()
-                        ->select(['id as id', 'nombre as name'])
-                        ->where(['departamento' => $departamento])
-                        ->orderBy(['nombre' => SORT_ASC])
-                        ->asArray()
-                        ->all();
-                $salida = Json::encode(['output' => $out, 'selected' => '']);
-                echo $salida;
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
-    }
-
-    public function actionLocalidades() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $municipio = $parents[0];
-                $out = Localidades::find()
-                        ->select(['id as id', 'nombre as name'])
-                        ->where(['municipio' => $municipio])
-                        ->orderBy(['nombre' => SORT_ASC])
-                        ->asArray()
-                        ->all();
-                $salida = Json::encode(['output' => $out, 'selected' => '']);
-                echo $salida;
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
     }
 
     private function datosMarcador($nodos) {

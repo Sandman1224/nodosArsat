@@ -43,6 +43,11 @@ AppAsset::register($this);
                     'url' => ['/nodos/index'],
                     'visible' => Yii::$app->user->can('admin'),
                 ],
+                [
+                    'label' => 'Nodos Arsat',
+                    'url' => ['/arsat/index'],
+                    'visible' => Yii::$app->user->can('arsat'),
+                ],
             ];
             if (Yii::$app->user->isGuest) {
                 //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];

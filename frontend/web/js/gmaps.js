@@ -8,10 +8,27 @@ function ubicarNodos() {
     // necesarios
     inicializarMapa();
     leyendaObras();
+    
+    let ruta = '';
+    switch(tipoUsuario){
+        case 1:
+            ruta = 'nodos';
+            break;
+        case 2:
+            ruta = 'arsat';
+            break;
+        case 3:
+            ruta = 'ejesa';
+            break;
+        default:
+            ruta = 'no definido';
+            console.log(ruta);
+            break;
+    }
 
     // Cargamos los nodos que recibimos en la variable "nodos" enviada desde la vista
     for (i = 0; i < nodos.length; i++) {
-        addMarker(nodos[i]);
+        addMarker(nodos[i], ruta);
     }
 }
 
@@ -51,7 +68,7 @@ function inicializarMapa() {
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
 }
 
-function addMarker(nodo) {
+function addMarker(nodo, ruta) {
     let id = nodo['id'];
     let nombre = nodo['nombre'];
     let departamento = nodo['departamento'];
@@ -114,7 +131,7 @@ function addMarker(nodo) {
                 + "<b>Prioridad:</b> " + prioridad + "</br>"
                 + "<b>Latitud:</b> " + latitud + "</br>"
                 + "<b>Longitud:</b> " + longitud + "</br>"
-                + "<a href='http://" + Servidor + "/nodos/view?id=" + id + "' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-info-sign'></span> Ver<a/>" + "</br>"
+                + "<a href='http://" + Servidor + "/" + ruta + "/view?id=" + id + "' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-info-sign'></span> Ver<a/>" + "</br>"
                 + "</div>";
 
         infoWindow.setContent(contenido);
