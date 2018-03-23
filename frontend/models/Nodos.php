@@ -33,6 +33,7 @@ use Yii;
 class Nodos extends \yii\db\ActiveRecord {
 
     const SCENARIO_ARSAT = 'arsat';
+    const SCENARIO_EJESA = 'ejesa';
 
     /**
      * @inheritdoc
@@ -43,7 +44,8 @@ class Nodos extends \yii\db\ActiveRecord {
 
     public function scenarios() {
         return[
-            self::SCENARIO_ARSAT => ['estadoSitioArsat']
+            self::SCENARIO_ARSAT => ['estadoSitioArsat'],
+            self::SCENARIO_EJESA => ['estadoSitioEjesa'],
         ];
     }
 

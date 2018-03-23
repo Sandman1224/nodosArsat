@@ -21,9 +21,8 @@ class NodosSearch extends Nodos
     public function rules()
     {
         return [
-            [['id', 'departamento', 'municipio', 'localidad', 'documentacion', 'poblacion', 'estadoSitio', 'prioridad'], 'integer'],
-            [['nombre', 'contratista', 'fechaDocumentacion', 'situacion', 'estadoSitioContratista', 'estadoSitioEjesa', 'estadoSitioArsat', 'borrado'], 'safe'],
-            [['latitud', 'longitud'], 'number'],
+            [['id', 'departamento', 'localidad', 'estadoSitio', 'prioridad'], 'integer'],
+            [['nombre'], 'safe'],
         ];
     }
 

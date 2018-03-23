@@ -69,19 +69,6 @@ $this->registerJs(
                 ]),
             ],
             [
-                'attribute' => 'municipio',
-                'value' => 'municipio0.nombre',
-                'filter' => Select2::widget([
-                    'model' => $searchModel,
-                    'data' => ArrayHelper::map($municipios, 'id', 'nombre'),
-                    'attribute' => 'municipio',
-                    'options' => ['placeholder' => 'Seleccione Municipio'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]),
-            ],
-            [
                 'attribute' => 'localidad',
                 'value' => 'localidad0.nombre',
                 'filter' => Select2::widget([
@@ -95,29 +82,12 @@ $this->registerJs(
                 ]),
             ],
             [
-                'attribute' => 'documentacion',
-                'value' => function ($data) {
-                    $est = $data['documentacion'];
-                    switch ($est) {
-                        case 1:
-                            $data['documentacion'] = 'Definir Valor 1';
-                            break;
-                        case 2:
-                            $data['documentacion'] = 'Definir Valor 2';
-                            break;
-                        case 3:
-                            $data['documentacion'] = 'Definir Valor 3';
-                            break;
-                        default:
-                            $data['documentacion'] = null;
-                            break;
-                    }
-
-                    return $data['documentacion'];
-                }
-            ],
-            [
                 'attribute' => 'estadoSitio',
+                'filter' => Html::activeDropDownList($searchModel, 'estadoSitio', [
+                    '1' => 'Definir Valor 1',
+                    '2' => 'Obra',
+                    '3' => 'Pendiente'
+                ], ['prompt' => 'Seleccione estado de sitio', 'class' => 'form-control']),
                 'value' => function ($data) {
                     $est = $data['estadoSitio'];
                     switch ($est) {
@@ -136,6 +106,33 @@ $this->registerJs(
                     }
 
                     return $data['estadoSitio'];
+                }
+            ],
+            [
+                'attribute' => 'prioridad',
+                'filter' => Html::activeDropDownList($searchModel, 'prioridad', [
+                    '1' => 'Alta',
+                    '2' => 'Media',
+                    '3' => 'Baja'
+                ], ['prompt' => 'Seleccione prioridad', 'class' => 'form-control']),
+                'value' => function ($data) {
+                    $est = $data['prioridad'];
+                    switch ($est) {
+                        case 1:
+                            $data['prioridad'] = 'Alta';
+                            break;
+                        case 2:
+                            $data['prioridad'] = 'Media';
+                            break;
+                        case 3:
+                            $data['prioridad'] = 'Baja';
+                            break;
+                        default:
+                            $data['prioridad'] = null;
+                            break;
+                    }
+
+                    return $data['prioridad'];
                 }
             ],
             //'latitud',

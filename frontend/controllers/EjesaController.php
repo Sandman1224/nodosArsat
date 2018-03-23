@@ -18,9 +18,9 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 /**
- * ArsatController implements the CRUD actions for Nodos model.
+ * EjesaController implements the CRUD actions for Nodos model.
  */
-class ArsatController extends Controller {
+class EjesaController extends Controller {
 
     /**
      * @inheritdoc
@@ -33,8 +33,7 @@ class ArsatController extends Controller {
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index'],
-                        'roles' => ['arsat'],
+                        'roles' => ['ejesa'],
                     ],
                 ],
             ],
@@ -101,7 +100,7 @@ class ArsatController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $model->scenario = Nodos::SCENARIO_ARSAT;
+        $model->scenario = Nodos::SCENARIO_EJESA;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
