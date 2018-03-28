@@ -22,6 +22,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  * @property integer $type
+ * @property boolean $borrado
  */
 class User extends ActiveRecord implements IdentityInterface {
 
@@ -34,7 +35,7 @@ class User extends ActiveRecord implements IdentityInterface {
     public static function tableName() {
         return '{{%user}}';
     }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -53,7 +54,7 @@ class User extends ActiveRecord implements IdentityInterface {
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -150,7 +151,11 @@ class User extends ActiveRecord implements IdentityInterface {
     public function setPassword($password) {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
-
+    
+    public function getPassword(){
+        return '';
+    }
+    
     /**
      * Generates "remember me" authentication key
      */

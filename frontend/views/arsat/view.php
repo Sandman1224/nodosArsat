@@ -19,18 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <div id="map"></div>
-
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrsDVmkIyyAcqnMdH4QYCpVEDX5SvXNrw&callback=verNodo">
-    </script>
-
-    <?php
-    $this->registerJs(
-            "var nodo = " . Json::htmlEncode($model) . ";", View::POS_HEAD
-    );
-    ?>
-
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
@@ -61,13 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     $est = $data['estadoSitio'];
                     switch ($est) {
                         case 1:
-                            $data['estadoSitio'] = 'Definir Valor 1';
+                            $data['estadoSitio'] = 'Finalizado';
                             break;
                         case 2:
-                            $data['estadoSitio'] = 'Definir Valor 2';
+                            $data['estadoSitio'] = 'Obra';
                             break;
                         case 3:
-                            $data['estadoSitio'] = 'Definir Valor 3';
+                            $data['estadoSitio'] = 'Pendiente';
                             break;
                         default:
                             $data['estadoSitio'] = null;
@@ -104,6 +92,18 @@ $this->params['breadcrumbs'][] = $this->title;
         //'borrado',
         ],
     ])
+    ?>
+
+    <div id="map"></div>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrsDVmkIyyAcqnMdH4QYCpVEDX5SvXNrw&callback=verNodo">
+    </script>
+
+    <?php
+    $this->registerJs(
+            "var nodo = " . Json::htmlEncode($model) . ";", View::POS_HEAD
+    );
     ?>
 
 </div>

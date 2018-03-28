@@ -43,10 +43,11 @@ class Nodos extends \yii\db\ActiveRecord {
     }
 
     public function scenarios() {
-        return[
-            self::SCENARIO_ARSAT => ['estadoSitioArsat'],
-            self::SCENARIO_EJESA => ['estadoSitioEjesa'],
-        ];
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_ARSAT] = ['estadoSitioArsat'];
+        $scenarios[self::SCENARIO_EJESA] = ['estadoSitioEjesa'];
+        
+        return $scenarios;
     }
 
     /**

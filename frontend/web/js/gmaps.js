@@ -77,7 +77,7 @@ function addMarker(nodo, ruta) {
     let latitud = nodo['latitud'];
     let longitud = nodo['longitud'];
     let prioridad = nodo['prioridad'];
-
+    
     var iconos = [
         'http://' + Servidor + '/img/estado-rojo.png',
         'http://' + Servidor + '/img/estado-amarillo.png',
@@ -110,7 +110,7 @@ function addMarker(nodo, ruta) {
             break;
     }
 
-    //Definimos la imagen de icono que llevará el marcador de mapa
+    // Definimos la imagen de icono que llevará el marcador de mapa
     var image = {
         url,
         size: new google.maps.Size(15, 15),
@@ -148,7 +148,7 @@ function leyendaObras() {
     var div = document.createElement('div');
     div.innerHTML = '<h4>Estado de Nodos</h4>' +
             '<table>' +
-            '<tr><td align="center" valign="middle"><img id="estadoObra" src="' + 'http://' + Servidor + '/img/estado-rojo.png' + '"></td>' + '<td>' + ' Definir Valor 1' + '</td></tr>' +
+            '<tr><td align="center" valign="middle"><img id="estadoObra" src="' + 'http://' + Servidor + '/img/estado-rojo.png' + '"></td>' + '<td>' + ' Finalizado' + '</td></tr>' +
             '<tr><td align="center" valign="middle"><img id="estadoObra" src="' + 'http://' + Servidor + '/img/estado-amarillo.png' + '"></td>' + '<td>' + ' Obra' + '</td></tr>' +
             '<tr><td align="center" valign="middle"><img id="estadoObra" src="' + 'http://' + Servidor + '/img/estado-verde.png' + '"></td>' + '<td>' + ' Pendiente' + '</td></tr>' +
             '</table>';

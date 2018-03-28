@@ -84,7 +84,7 @@ $this->registerJs(
             [
                 'attribute' => 'estadoSitio',
                 'filter' => Html::activeDropDownList($searchModel, 'estadoSitio', [
-                    '1' => 'Definir Valor 1',
+                    '1' => 'Finalizado',
                     '2' => 'Obra',
                     '3' => 'Pendiente'
                 ], ['prompt' => 'Seleccione estado de sitio', 'class' => 'form-control']),
@@ -92,7 +92,7 @@ $this->registerJs(
                     $est = $data['estadoSitio'];
                     switch ($est) {
                         case 1:
-                            $data['estadoSitio'] = 'Definir Valor 1';
+                            $data['estadoSitio'] = 'Finalizado';
                             break;
                         case 2:
                             $data['estadoSitio'] = 'Obra';

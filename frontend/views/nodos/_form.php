@@ -65,10 +65,9 @@ use yii\helpers\ArrayHelper;
 
     <?=
     $form->field($model, 'documentacion')->dropDownList([
-        1 => 'Definir Valor 1',
-        2 => 'Definir Valor 2',
-        3 => 'Definir Valor 3',
-            ], ['prompt' => 'Seleccione documentación presentada']);
+        1 => 'Actualizado',
+        2 => 'Pendiente',
+            ], ['prompt' => 'Seleccione estado de documentación']);
     ?>
 
     <?=
@@ -88,7 +87,7 @@ use yii\helpers\ArrayHelper;
 
     <?=
     $form->field($model, 'estadoSitio')->dropDownList([
-        1 => 'Definir Valor 1',
+        1 => 'Finalizado',
         2 => 'Obra',
         3 => 'Pendiente',
             ], ['prompt' => 'Seleccione estado del nodo']);
@@ -106,7 +105,15 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'estadoSitioContratista')->textInput(['maxlength' => true]) ?>
 
-    <div class="form-group">
+    <div style="border: 1px solid #1E679A; padding: 10px">
+        <h4>Datos de los usuarios de Ejesa y Arsat</h4>
+        
+        <?= $form->field($model, 'estadoSitioEjesa')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'estadoSitioArsat')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="form-group" style="padding-top: 10px">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 

@@ -256,7 +256,7 @@ class NodosController extends Controller {
                     $arreglo['prioridad'] = 'Baja';
                     break;
                 default:
-                    $data['prioridad'] = 'Sin Definir';
+                    $arreglo['prioridad'] = 'Sin Definir';
                     break;
             }
 

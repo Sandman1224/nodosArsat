@@ -33,7 +33,6 @@ class ArsatController extends Controller {
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index'],
                         'roles' => ['arsat'],
                     ],
                 ],
@@ -150,7 +149,7 @@ class ArsatController extends Controller {
                     $arreglo['prioridad'] = 'Baja';
                     break;
                 default:
-                    $data['prioridad'] = 'Sin Definir';
+                    $arreglo['prioridad'] = 'Sin Definir';
                     break;
             }
 
